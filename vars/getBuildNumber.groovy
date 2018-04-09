@@ -1,8 +1,22 @@
 def call() {
-	def temp = new File('${env.workspace}/BuildVersion.txt')
-	def temp1 = temp as Integer
+    def newBuildNumber = 0
+	lock('buildFile') {
+		def buildFile = '${env.workspace}/BuildVersion.json'
+		def buildFileData
+		
+		if(!fileExist(buildFile) {
+			touch buildFile
+			def seed = '{"version":"1"}'
+			buildFileData = readJSON text: seed
+		} else {
+			buildFileData = readJSON file: buildFile
+		}
+		
+		newBuildNumber = buildFileData.version as Integer
+		newBuildNumber = newBuildNumber	+ 1
+		buildFileData.version = newBuildNumber
+		writeJSON file: buildFile, json: buildFileData
+	}
 	
-	temp1 = temp1 + 1
-	
-	return temp1;
+	return newBuildNumber;
 }
