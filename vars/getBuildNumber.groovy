@@ -4,12 +4,13 @@ def call() {
 		def buildFile = '${env.workspace}/BuildVersion.json'
 		def buildFileData
 		
-		if(!fileExist(buildFile) {
+		if(fileExist(buildFile) {		
+			buildFileData = readJSON file: buildFile
+		} 
+		else {
 			touch buildFile
 			def seed = '{"version":"1"}'
 			buildFileData = readJSON text: seed
-		} else {
-			buildFileData = readJSON file: buildFile
 		}
 		
 		newBuildNumber = buildFileData.version as Integer
