@@ -1,11 +1,5 @@
 def call(body) {
-
-	// transfer parameters
-	def config = [:]
-	body.resolveStrategy = Closure.DELEGATE_FIRST
-	body.delegate = config
-	body()			
-	
+		
 	node {
 		def app
 		docker.withRegistry('http://10.25.232.183:5000') {
