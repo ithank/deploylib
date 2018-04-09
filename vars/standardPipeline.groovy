@@ -7,9 +7,9 @@ def call(body) {
 				checkout scm
 			}			
 			stage('Build') {
-			    def buildNumber = getBuildNumber()
+			    def theBuildNumber = getBuildNumber()
 				def buildLabel = getBuildLabel{
-					buildNumber = buildNumber
+					buildNumber = theBuildNumber
 				}
 				currentBuild.displayName = "# " + buildLabel
 				app = docker.build(buildLabel)
