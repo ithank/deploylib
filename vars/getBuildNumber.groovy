@@ -4,7 +4,7 @@ def call() {
 		def buildFile = '${env.workspace}/BuildVersion.json'
 		def buildFileData
 		
-		if(fileExist(buildFile) {		
+		if(fileExist(buildFile)) {		
 			buildFileData = readJSON file: buildFile
 		} 
 		else {
