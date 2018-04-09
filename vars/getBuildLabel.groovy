@@ -8,5 +8,5 @@ def call(body) {
 	def data = readYaml file: 'build.yml'
     def date = new Date()
 	
-	return "${data.imageName}:${data.build.version.prefix}.${date.format('MMdd')}.${config.buildNumber}";
+	return "${data.build.imageName}:${data.build.version.prefix}.${date.format('MMdd')}.${config.buildNumber}";
 }
