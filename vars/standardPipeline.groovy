@@ -3,7 +3,7 @@ def call(body) {
 	node {
 		def app
 		def buildData
-		docker.withRegistry('http://10.25.232.183:5000') {
+		docker.withRegistry("${env.docker_repository}") {
 			stage('Clone') {
 				checkout scm
 			}			
@@ -11,6 +11,12 @@ def call(body) {
 			    def theBuildNumber = getBuildNumber()
 				buildData = getBuildData{
 					buildNumber = theBuildNumber
+				}
+				
+				println("Docker pull dependent images")
+				for(element in buildData.depend) {
+					println("image: ${element}")
+					docker.image(element).pull()
 				}
 				
 				currentBuild.displayName = "# " + buildData.label
