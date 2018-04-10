@@ -17,7 +17,11 @@ def call(body) {
 				println("Docker build")
 				println("build label: ${buildData.label}")
 				println("build-arg: ${buildData.argumentString}")
-				app = docker.build(buildData.label,"--build-arg ${buildData.argumentString} .")
+				if(buildData.argumentString=="") {
+					app = docker.build(buildData.label)
+				} else {
+					app = docker.build(buildData.label,"--build-arg ${buildData.argumentString} .")
+				}
 			}
 				
 			stage('Test') {
