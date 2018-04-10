@@ -10,9 +10,10 @@ def call(body) {
 
 	buildData.argumentString = ""
 	if(buildData.build.argument != null) {
+		println("arguments:")
 		for(element in buildData.build.argument) {
 			println("element: ${element}")
-			buildData.argumentString = "${element.key}=${element.value}" + " "		
+			buildData.argumentString = "${element}" + " "		
 		}
 	}
 	buildData.label = "${buildData.build.imageName}:${buildData.build.version.prefix}.${date.format('MMdd')}.${config.buildNumber}"
