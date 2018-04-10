@@ -2,17 +2,19 @@ def call(body) {
 		
 	node {
 		def app
+		def buildData
 		docker.withRegistry('http://10.25.232.183:5000') {
 			stage('Clone') {
 				checkout scm
 			}			
 			stage('Build') {
 			    def theBuildNumber = getBuildNumber()
-				def buildLabel = getBuildLabel{
+				buildData = getBuildData{
 					buildNumber = theBuildNumber
 				}
-				currentBuild.displayName = "# " + buildLabel
-				app = docker.build(buildLabel)
+				
+				currentBuild.displayName = "# " + buildData.label
+				app = docker.build(buildData.label,"--build-arg ${buildData.argumentString} .")
 			}
 				
 			stage('Test') {
@@ -22,6 +24,7 @@ def call(body) {
 			}
 			stage('Push') { 
 				app.push()
+				app.push("${buildData.build.version.prefix}")
 			}
 		}
 	}
