@@ -10,7 +10,7 @@ def call(body) {
 
 	buildData.argumentString = ""
 	if(buildData.build.argument != null) {
-		for(element in buildData.build.argument.each {
+		for(element in buildData.build.argument.each) {
 			buildData.argumentString = "${element.key}=${element.value}" + " "		
 		}
 	}
