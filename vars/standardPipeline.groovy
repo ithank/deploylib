@@ -14,6 +14,9 @@ def call(body) {
 				}
 				
 				currentBuild.displayName = "# " + buildData.label
+				println("Docker build")
+				println("build label: ${buildData.label}")
+				println("build-arg: ${buildData.argumentString}")
 				app = docker.build(buildData.label,"--build-arg ${buildData.argumentString} .")
 			}
 				
